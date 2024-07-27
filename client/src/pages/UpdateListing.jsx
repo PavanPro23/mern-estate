@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import {
   getDownloadURL,
@@ -10,7 +9,7 @@ import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function UpdateListing() {
+export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const params = useParams();
@@ -35,16 +34,17 @@ export default function UpdateListing() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchListing = async() => {
-        const listingId = params.listingId;
-        const res = await fetch(`/api/listing/get/${listingId}`);
-        const data = await res.json();
-        if(data.success === false){
-            console.log(data.message)
-            return;
-        }
-        setFormData(data);
-    }
+    const fetchListing = async () => {
+      const listingId = params.listingId;
+      const res = await fetch(`/api/listing/get/${listingId}`);
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setFormData(data);
+    };
+
     fetchListing();
   }, []);
 
@@ -316,7 +316,6 @@ export default function UpdateListing() {
                 />
                 <div className='flex flex-col items-center'>
                   <p>Discounted price</p>
-
                   {formData.type === 'rent' && (
                     <span className='text-xs'>($ / month)</span>
                   )}
